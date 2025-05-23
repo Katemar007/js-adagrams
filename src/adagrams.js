@@ -79,7 +79,7 @@ export const drawLetters = () => {
   const lettersList = helperLettersList();
 
   while (lettersInHand.length < 10) {
-  // Returns a random integer from 0 to 100:
+    // Returns a random integer from 0 to 100:
     const randomInteger = Math.floor(Math.random() * lettersList.length);
     const char = lettersList[randomInteger];
     // Returns number of appearances of 'letter' in listTiles
@@ -122,6 +122,27 @@ export const scoreWord = (word) => {
 };
 
 export const highestScoreFrom = (words) => {
-  // Implement this method for wave 4
-};
+  if (!words) return null;
 
+  let bestWord = words[0];
+  let bestScore = scoreWord(words[0]);
+  for (let i =1; i<words.length; i++) {
+    let word = words[i];
+    let score = scoreWord(word);
+
+    if (score > bestScore) {
+      bestScore = score;
+      bestWord = word;
+    } else if (score === bestScore) {
+      if ((word.length < bestWord.length && bestWord.length < 10) ||
+      (word.length == 10 && bestWord.length < 10)) {
+        bestWord = word;
+        bestScore = score;
+      }
+    }
+  }
+  return {
+    'score': bestScore,
+    'word': bestWord
+  }
+}
