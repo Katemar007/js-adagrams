@@ -40,29 +40,43 @@ export function helperLettersList() {
 
   return lettersList;
 }
+// returns the number of letters in an array
+export const helperCountInArray = (char, array) => {
+  return array.filter(letter => letter === char).length;
+}
 
 export const drawLetters = () => {
-  const tiles = [];
+  const lettersInHand = [];
   const lettersList = helperLettersList();
 
-  while (tiles.length < 10) {
+  while (lettersInHand.length < 10) {
   // Returns a random integer from 0 to 100:
     const randomInteger = Math.floor(Math.random() * lettersList.length);
     const char = lettersList[randomInteger];
     // Returns number of appearances of 'letter' in listTiles
-    const countLetter = tiles.filter(letter => letter === char).length;
+    const countLetter = helperCountInArray(char, lettersInHand);
 
     // checks if the number of `letter` in `tiles` does not exceed the one on the LETTER_POOL
     if (countLetter < LETTER_POOL[char]) {
-      tiles.push(char);
+      lettersInHand.push(char);
     }
   }
-  return tiles
+  return lettersInHand;
 }
 
 export const usesAvailableLetters = (input, lettersInHand) => {
-  // Implement this method for wave 2
-};
+  for (const char of input) {
+    const inputList = input.split('')
+    const countInput = helperCountInArray(char, inputList);
+    const countHand = helperCountInArray(char, lettersInHand);
+
+    if (!lettersInHand.includes(char) || countInput > countHand) {
+      return false;
+    };
+  };
+  return true;
+}
+
 
 export const scoreWord = (word) => {
   // Implement this method for wave 3
