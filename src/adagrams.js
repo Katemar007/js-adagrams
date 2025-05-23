@@ -28,6 +28,35 @@ const LETTER_POOL = {
   Z: 1,
 };
 
+const LETTERS_SCORE = {
+  A: 1, 
+  B: 3, 
+  C: 3, 
+  D: 2, 
+  E: 1, 
+  F: 4, 
+  G: 2, 
+  H: 4, 
+  I: 1, 
+  J: 8, 
+  K: 5, 
+  L: 1, 
+  M: 3, 
+  N: 1, 
+  O: 1, 
+  P: 3, 
+  Q: 10, 
+  R: 1, 
+  S: 1, 
+  T: 1, 
+  U: 1, 
+  V: 4, 
+  W: 4, 
+  X: 8, 
+  Y: 4, 
+  Z: 10
+};
+
 export function helperLettersList() {
   // buils a list of letters according to their amount in LETTER_POOL
   const lettersList = [];
@@ -67,6 +96,7 @@ export const drawLetters = () => {
 export const usesAvailableLetters = (input, lettersInHand) => {
   for (const char of input) {
     const inputList = input.split('')
+    // count the # or char in `input` and in `lettersInHand`
     const countInput = helperCountInArray(char, inputList);
     const countHand = helperCountInArray(char, lettersInHand);
 
@@ -77,11 +107,21 @@ export const usesAvailableLetters = (input, lettersInHand) => {
   return true;
 }
 
-
 export const scoreWord = (word) => {
-  // Implement this method for wave 3
+  let score = 0;
+  // add value for char as a key from dict LETTER_SCORE
+  for(let char of word) {
+    char = char.toUpperCase();
+    score = score + LETTERS_SCORE[char];
+  }
+  // add extra 8 if word has >7 letters
+  if (word.length >= 7) {
+    score = score + 8;
+  }
+  return score;
 };
 
 export const highestScoreFrom = (words) => {
   // Implement this method for wave 4
 };
+
